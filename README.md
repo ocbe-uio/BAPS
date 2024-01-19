@@ -16,25 +16,13 @@ To install and run BAPS, you will probably need:
 
 ## Running MATLAB from the command line
 
-Open a terminal. From the root folder of this repository, open MATLAB. Assuming MATLAB is installed in `/path/to/matlab`, this can be done by typing:
+Open a terminal. From the root folder of this repository, open MATLAB. For example, if MATLAB is installed on `/usr/local/MATLAB/R2023b`, this can be done by typing:
 
 ```bash
-/path/to/matlab
+/usr/local/MATLAB/R2023b/bin/matlab -nodesktop -nosplash
 ```
 
-If you don't know where MATLAB is installed, you can find out by opening the MATLAB GUI and typing:
-
-```MATLAB
-matlabroot
-```
-
-On Linux and Windows, respectively, this is `/usr/local/MATLAB/R2016b` and `C:\Program Files\MATLAB\R2016b` by default.
-
-Finally, run MATLAB from the command line by typing:
-
-```bash
-/path/to/matlab -nodesktop -nosplash
-```
+If you don't know where MATLAB is installed, you can find out by opening the MATLAB GUI from your OS's application's menu and typing `matlabroot` in the MATLAB command window.
 
 ## Compiling BAPS
 
