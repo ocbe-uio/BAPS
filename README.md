@@ -6,6 +6,13 @@ Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture even
 
 # Installation
 
+## Pre-requisites
+
+To install and run BAPS, you will probably need:
+
+1. A local installation of MATLAB (i.e., not the web version). You can download the latest version [here](https://se.mathworks.com/downloads/) (assuming you have a license)
+2. MATLAB Compiler and/or MATLAB Compiler SDK (may be an available option as you install MATLAB)
+
 ## Running MATLAB from the command line
 
 Open a terminal. From the root folder of this repository, open MATLAB. Assuming MATLAB is installed in `/path/to/matlab`, this can be done by typing:
