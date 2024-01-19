@@ -12,6 +12,7 @@ To install and run BAPS, you will probably need:
 
 1. A local installation of MATLAB (i.e., not the web version). You can download the latest version [here](https://se.mathworks.com/downloads/) (assuming you have a license)
 2. MATLAB Compiler and/or MATLAB Compiler SDK (may be an available option as you install MATLAB)
+3. A Bash shell
 
 ## Running MATLAB from the command line
 
