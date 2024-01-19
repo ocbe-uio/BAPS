@@ -38,3 +38,15 @@ run compileBaps6.m
 ```
 
 This should create a `BAPS_package` folder in the root directory of this repository.
+
+# Running BAPS
+
+After installation, run BAPS by typing the following from a terminal, replacing `/usr/local/MATLAB/R2023b` with the path to MATLAB on your system:
+
+```bash
+bash BAPS_package/run_baps6.sh /usr/local/MATLAB/R2023b/
+```
+
+Eventually, a graphical interface like the one below should appear:
+
+![baps home screen](/aux/home_screen.png)
