@@ -2,7 +2,7 @@
 
 Bayesian Analysis of Population Structure. For more information, see reference below.
 
-Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. doi:10.1111/j.1365-294X.2006.02994.x
+Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. [doi:10.1111/j.1365-294X.2006.02994.x](https://doi.org/10.1111/j.1365-294X.2006.02994.x)
 
 # Installation
 
