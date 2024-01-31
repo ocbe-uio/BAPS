@@ -1,6 +1,7 @@
 MATLABDIR = /usr/local/MATLAB/R2023b
 MATLABEXEC = $(MATLABDIR)/bin/matlab
 BAPSFOLDERS = ./admixture ./general ./graph ./independent ./linkage ./parallel ./spatial
+MATLABOPTS = -nodisplay -nosplash -nodesktop -batch  # -batch comes last
 
 BAPS_package/run_baps6.sh: $(BAPSFOLDERS)
 	@if [ ! -d $(MATLABDIR) ]; then \
@@ -10,11 +11,11 @@ BAPS_package/run_baps6.sh: $(BAPSFOLDERS)
 	fi
 
 	@echo -n "Adding BAPS to MATLAB path... "
-	@$(MATLABEXEC) -nodisplay -nosplash -nodesktop -batch "run('add_BAPS_to_path.m'); exit;"
+	@$(MATLABEXEC) $(MATLABOPTS) "run('add_BAPS_to_path.m'); exit;"
 	@echo "done"
 
 	@echo -n "Compiling BAPS... "
-	@$(MATLABEXEC) -nodisplay -nosplash -nodesktop -batch "run('compileBaps6.m'); exit;"
+	@$(MATLABEXEC) $(MATLABOPTS) "run('compileBaps6.m'); exit;"
 	@echo "done"
 
 run:
