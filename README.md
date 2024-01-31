@@ -1,6 +1,6 @@
-# BAPS
+# BAPS: Bayesian Analysis of Population Structure
 
-Bayesian Analysis of Population Structure. For more information, see reference below.
+BAPS is a MATLAB package. For methodological information, see reference below.
 
 Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. [doi:10.1111/j.1365-294X.2006.02994.x](https://doi.org/10.1111/j.1365-294X.2006.02994.x)
 
@@ -18,9 +18,7 @@ To install and run BAPS, you will probably need:
 
 ## Shortcut with Make
 
-If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make` from the root folder of this repository to install BAPS. To run BAPS, type `make run`.
-
-Otherwise, please follow the instructions below.
+If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make` from the root folder of this repository to install BAPS. Otherwise, please follow the instructions below.
 
 ## Running MATLAB from the command line
 
@@ -50,6 +48,8 @@ After installation, run BAPS by typing the following from a terminal, replacing 
 ```bash
 bash BAPS_package/run_baps6.sh /usr/local/MATLAB/R2023b/
 ```
+
+If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make run` from the root folder of this repository to install BAPS.
 
 Eventually, a graphical interface like the one below should appear:
 
