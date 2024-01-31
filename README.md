@@ -16,6 +16,12 @@ To install and run BAPS, you will probably need:
 2. MATLAB Compiler and/or MATLAB Compiler SDK (may be an available option as you install MATLAB)
 3. A Bash shell
 
+## Shortcut with Make
+
+If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make` from the root folder of this repository to install BAPS. To run BAPS, type `make run`.
+
+Otherwise, please follow the instructions below.
+
 ## Running MATLAB from the command line
 
 Open a terminal. From the root folder of this repository, open MATLAB. For example, if MATLAB is installed on `/usr/local/MATLAB/R2023b`, this can be done by typing:
