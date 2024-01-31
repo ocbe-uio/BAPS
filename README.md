@@ -1,6 +1,8 @@
 # BAPS: Bayesian Analysis of Population Structure
 
-BAPS is a MATLAB package. For methodological information, see reference below.
+BAPS is a MATLAB package for Bayesian inference of the genetic structure in a population. BAPS treats both the allele frequencies of the molecular markers (or nucleotide frequencies for DNA sequence data) and the number of genetically diverged groups in population as random variables. However, analyses and model comparisons can also be performed using a fixed number of genetically diverged groups or pre-specified population structures.
+
+For installation and usage instructions, see the following sections and [the PDF manual](https://github.com/ocbe-uio/BAPS/blob/develop/BAPS6manual.pdf). For methodological information, see reference below.
 
 Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. [doi:10.1111/j.1365-294X.2006.02994.x](https://doi.org/10.1111/j.1365-294X.2006.02994.x)
 
@@ -54,6 +56,8 @@ If you have [Make](https://www.gnu.org/software/make/) installed, you can simply
 Eventually, a graphical interface like the one below should appear:
 
 ![baps home screen](/aux/home_screen.png)
+
+For more information about usage, please read [the BAPS6 manual](https://github.com/ocbe-uio/BAPS/blob/develop/BAPS6manual.pdf).
 
 # Additional (legacy) documentation
 
