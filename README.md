@@ -4,6 +4,8 @@ Bayesian Analysis of Population Structure. For more information, see reference b
 
 Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. [doi:10.1111/j.1365-294X.2006.02994.x](https://doi.org/10.1111/j.1365-294X.2006.02994.x)
 
+The BAPS version available in this repository is BAPS 6.0, authored by Jukka Corander, Pekka Marttinen, Jukka Siren, Jing Tang and Lu Cheng. Copyright 2005-2012, all rights reserved.
+
 # Installation
 
 ## Pre-requisites
