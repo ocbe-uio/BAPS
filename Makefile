@@ -1,6 +1,6 @@
 MATLABDIR = /usr/local/MATLAB/R2023b
 MATLABEXEC = $(MATLABDIR)/bin/matlab
-BAPSFOLDERS = ./admixture ./general ./graph ./independent ./linkage ./parallel ./spatial
+BAPSFOLDERS = ./admixture/* ./general/* ./graph/* ./independent/* ./linkage/* ./parallel/* ./spatial/*
 MATLABOPTS = -nodisplay -nosplash -nodesktop -batch  # -batch comes last
 
 BAPS_package/run_baps6.sh: $(BAPSFOLDERS)
