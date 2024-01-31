@@ -1,6 +1,8 @@
-# BAPS
+# BAPS: Bayesian Analysis of Population Structure
 
-Bayesian Analysis of Population Structure. For more information, see reference below.
+BAPS is a MATLAB package for Bayesian inference of the genetic structure in a population. BAPS treats both the allele frequencies of the molecular markers (or nucleotide frequencies for DNA sequence data) and the number of genetically diverged groups in population as random variables. However, analyses and model comparisons can also be performed using a fixed number of genetically diverged groups or pre-specified population structures.
+
+For installation and usage instructions, see the following sections and [the PDF manual](https://github.com/ocbe-uio/BAPS/blob/develop/BAPS6manual.pdf). For methodological information, see reference below.
 
 Corander, J. and Marttinen, P. (2006), Bayesian identification of admixture events using multilocus molecular markers. Molecular Ecology, 15: 2833-2843. [doi:10.1111/j.1365-294X.2006.02994.x](https://doi.org/10.1111/j.1365-294X.2006.02994.x)
 
@@ -18,9 +20,7 @@ To install and run BAPS, you will probably need:
 
 ## Shortcut with Make
 
-If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make` from the root folder of this repository to install BAPS. To run BAPS, type `make run`.
-
-Otherwise, please follow the instructions below.
+If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make` from the root folder of this repository to install BAPS. Otherwise, please follow the instructions below.
 
 ## Running MATLAB from the command line
 
@@ -51,9 +51,13 @@ After installation, run BAPS by typing the following from a terminal, replacing 
 bash BAPS_package/run_baps6.sh /usr/local/MATLAB/R2023b/
 ```
 
+If you have [Make](https://www.gnu.org/software/make/) installed, you can simply type `make run` from the root folder of this repository to install BAPS.
+
 Eventually, a graphical interface like the one below should appear:
 
 ![baps home screen](/aux/home_screen.png)
+
+For more information about usage, please read [the BAPS6 manual](https://github.com/ocbe-uio/BAPS/blob/develop/BAPS6manual.pdf).
 
 # Additional (legacy) documentation
 
