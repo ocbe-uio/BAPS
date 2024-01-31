@@ -48,3 +48,7 @@ bash BAPS_package/run_baps6.sh /usr/local/MATLAB/R2023b/
 Eventually, a graphical interface like the one below should appear:
 
 ![baps home screen](/aux/home_screen.png)
+
+# Additional (legacy) documentation
+
+For preservation, a [Wiki page](https://github.com/ocbe-uio/BAPS/wiki) has been setup containing a slightly-modified version of the [original webpage for BAPS](http://www.helsinki.fi/bsg/software/BAPS/), which is no longer available. Please note that the content available in those pages may not be applicable to the current version of the software available on this repository, but might still provide some useful information to its users.
