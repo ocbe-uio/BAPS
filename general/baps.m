@@ -1,5 +1,5 @@
 function baps
-  version = [6 0 0 9000];
+  version = [6 0 0 9001];
   versionStr = sprintf('%d.%d.%d.%d', version(1), version(2), version(3), version(4));
   disp(['Welcome to BAPS ' versionStr]);
   while true
