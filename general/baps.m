@@ -12,9 +12,11 @@ function baps
     end
     switch choice
       case '1'
+        disp('Clustering of individuals');
         greedyMix(-1);
         break;
       case '2'
+        disp('Clustering of groups of individuals');
         greedyPopMix;
         break;
       otherwise
