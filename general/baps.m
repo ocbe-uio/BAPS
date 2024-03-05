@@ -1,5 +1,5 @@
 function baps
-  disp('Welcome to BAPS');
+  disp('Welcome to BAPS version 6.0.0.9000'); % follow https://semver.org/
   while true
     prompt = ['Please select the function you want to run ' ...
       '(1: greedyMix, 2: greedyPopMix): '];
