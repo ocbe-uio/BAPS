@@ -1,11 +1,11 @@
 function baps
-  disp("Welcome to BAPS");
+  disp('Welcome to BAPS');
   while true
     prompt = ['Please select the function you want to run ' ...
       '(1: greedyMix, 2: greedyPopMix): '];
     choice = input(prompt, 's');
     if isempty(choice)
-      disp("Exiting BAPS");
+      disp('Exiting BAPS');
       return;
     end
     switch choice
@@ -16,7 +16,7 @@ function baps
         greedyPopMix;
         break;
       otherwise
-        disp("Invalid choice. Please try again.");
+        disp('Invalid choice. Please try again.');
     end
   end
 end
