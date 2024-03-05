@@ -1,8 +1,8 @@
 function baps4cbf(action)
     switch action
-        case 1
+        case 'mix1_button'
             greedyMix(-1);
-        case 2
+        case 'mix2_button'
             greedyPopMix;
         case 'trained_button'
             trainedMix;
