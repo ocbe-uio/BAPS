@@ -1,5 +1,7 @@
 function baps
-  disp('Welcome to BAPS version 6.0.0.9000'); % follow https://semver.org/
+  version = [6 0 0 9000];
+  versionStr = sprintf('%d.%d.%d.%d', version(1), version(2), version(3), version(4));
+  disp(['Welcome to BAPS ' versionStr]);
   while true
     prompt = ['Please select the function you want to run ' ...
       '(1: greedyMix, 2: greedyPopMix): '];
