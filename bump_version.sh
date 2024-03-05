@@ -25,5 +25,10 @@ do
   echo "$line"
 done < "general/baps.m" > "general/baps_new.m"
 
+
 # Replace the old file with the new file
 mv "general/baps_new.m" "general/baps.m"
+
+# Final message (useful for commit)
+version_string=$(echo "$version" | tr ' ' '.')
+echo "Updated BAPS version to $version_string"
