@@ -5,10 +5,10 @@ base = findobj('Tag','base_figure');
 
 switch action
 
-    case 'mix1_button' 
-        greedyMix(-1);        
+    case 1
+        greedyMix(-1);
 
-    case 'mix2_button'
+    case 2
         greedyPopMix;
 
     case 'trained_button'
@@ -17,36 +17,36 @@ switch action
     case 'spatial_button'
         spatialMixture;
         showmethebaps;
-        
+
     case 'spatial2_button'
         spatialPopMixture;
         showmethebaps;
-        
+
     case 'linkage_button'
         linkageMixture_speed;
         %linkageMixture_ultraspeed;
         showmethebaps;
-       
+
     case 'admix1_button'
         admix1(-1);
         showmethebaps;
     case 'admix2_button'
         admix2;
-        
+
     case 'compare_menu'
         compare;
     case 'compare_admix_menu'
         compare_admix;
-        
+
     case 'load_mixture_menu'
         loadMixture;
-        
+
     case 'load_admixture_menu'
         loadAdmixture;
-        
+
     case 'load_spatial_menu'
         loadSpatial;
-        
+
     case 'output_menu'
         asetaOutputFile;
 
@@ -55,7 +55,7 @@ switch action
 
     case 'close_menu'
         closeFile;
-        
+
     case 'exit_menu'
         h0 = findobj('Tag','base_figure'); delete(h0);
         h0 = findobj('Tag','image_figure'); delete(h0);
@@ -68,16 +68,16 @@ switch action
 
     case 'partitio_menu'
         viewPartitio;
-     
+
     case 'admix_menu'
         viewAdmixture;
-    
+
     case 'likelihood_menu'
         viewLoghood;
-        
+
     case 'energy_menu'
         viewEnergy;
-        
+
     case 'geneflow_menu'
         viewGeneflow;
 
@@ -86,40 +86,40 @@ switch action
 
     case 'varmuus_menu'
         localUncertainty;
-        
+
     case 'changecolor_menu'
         changeColor;
-        
+
     case 'helpdoc'
         openHelpDoc;
-        
+
     case 'helponline'
         openHelpHtml;
-        
+
     case 'about'
         openAboutWindow;
-    
+
     case 'calculate_kl'
         calculateDis('KL');
-    
+
     case 'calculate_nei'
         calculateDis('Nei');
 
     case 'calculate_hamming'
         calculateDis('Hamming');
-        
+
     case 'upgma_menu'
         viewPhylogeny('upgma');
-        
+
     case 'nj_menu'
         viewPhylogeny('nj');
-        
+
     case 'mutationplot_menu'
         mutationPlot(-1);
-        
+
     case 'fixk_menu'
         goToFixedK;
-       
+
     case 'partitioncompare_menu'
         goToPartitionCompare;
 end
@@ -144,7 +144,7 @@ open(fig_file_name);
 % Old version
 % ----------------------------
 % % Loads previously saved figure.
-% 
+%
 % waitALittle;
 % [filename,pathname] = uigetfile('*.mat','Load Figure');
 % if (sum(filename)==0) || (sum(pathname)==0)
@@ -172,7 +172,7 @@ open(fig_file_name);
 %     disp('Incorrect file format');
 %     return;
 % end
-% 
+%
 % if isfield(tiedot, 'rows')
 %     rows = tiedot.rows;
 %     partition = tiedot.info;
@@ -307,7 +307,7 @@ c = get(h0,'UserData');
 %     disp('Incorrect file format');
 %     return;
 % end
-% 
+%
 % if ~isfield(c, 'pointers')
 %     disp('Coordinate data missing from the result file');
 %     return;
@@ -358,7 +358,7 @@ c = get(h0,'UserData');
 %     disp('Incorrect file format');
 %     return;
 % end
-% 
+%
 % if ~isfield(c, 'pointers')
 %     disp('Coordinate data missing from the result file');
 %     return;
@@ -493,7 +493,7 @@ filename = get(h0,'String');
 % end
 
 % mixtureType = c.mixtureType;
-proportionsIt = c.proportionsIt; 
+proportionsIt = c.proportionsIt;
 popnames = c.popnames; partition = c.PARTITION;
 mixtureType = c.mixtureType;
 % if strcmp(mixtureType,'linkage_mix') % For bacterial clustering data
@@ -504,13 +504,13 @@ mixtureType = c.mixtureType;
         popnames=cell(ninds,2);
         for ind=1:ninds
             popnames{ind,1}=cellstr(num2str(ind));
-        end        
+        end
         popnames(:,2)=num2cell((1:ninds)');
     end
- 
+
     npops = c.npops; % all the clusters including outliers
     admixnpops = c.admixnpops;
-    
+
     if ~isfield(c,'pvalue') % compatiable with old data
         disp('*** WARNING: pvalue is not found in the admixture result.');
         disp('*** WARNING: Old admixture file.');
@@ -520,7 +520,7 @@ mixtureType = c.mixtureType;
     end
     view_admixture(proportionsIt,npops,admixnpops, ...
                          popnames,partition,pvalue,filename);
-%else 
+%else
 %    disp('*** ERROR: incorrect admixture data.');
     % put which variable as the input?
     % admixnpops = c.admixnpops;
@@ -537,13 +537,13 @@ mixtureType = c.mixtureType;
 %--------------------------------------------------------------------------
 function viewLoghood
     view_loglikelihood;
-        
+
 function viewEnergy
     view_energy;
             %--------------------------------------------------------------------------
  function viewGeneflow
     view_geneflow;
-                
+
 %--------------------------------------------------------------------------
 function changeColor()
    h0 = findobj('Tag','base_figure');
@@ -836,8 +836,8 @@ if npops > 1
     maxnoalle = size(COUNTS,1);
     nloci = size(COUNTS,2);
     d = zeros(maxnoalle, nloci, npops);
-   
-    
+
+
     switch type
         case 'KL'
             prior = adjprior;
@@ -885,7 +885,7 @@ if npops > 1
                     div = -log(div1/div2);
                     dist_mat(pop1,pop2) = div;
                 end
-           end    
+           end
         case 'Hamming'
            ekarivi = num2str(npops);
            disp('--------------------------------------');
@@ -899,7 +899,7 @@ if npops > 1
                 end
             end
     end
-    
+
 end
 
 dist_mat = dist_mat + dist_mat'; % make it symmetric
@@ -948,7 +948,7 @@ if abs(div)<100
     if arvo>0
         mjono(1) = num2str(arvo);
     end
-    
+
 else
     suurinYks = floor(log10(div));
     mjono(6) = num2str(suurinYks);
@@ -975,7 +975,7 @@ dist = dist1/length1;
 function digit = palautaYks(num,yks)
 % palauttaa luvun num 10^yks termin kertoimen
 % string:in?
-% yks täytyy olla kokonaisluku, joka on 
+% yks täytyy olla kokonaisluku, joka on
 % vähintään -1:n suuruinen. Pienemmill?
 % luvuilla tapahtuu jokin pyöristysvirhe.
 
@@ -987,7 +987,3 @@ else
     digit = floor(rem(digit,10));
 end
 digit = num2str(digit);
-
-
-
-
