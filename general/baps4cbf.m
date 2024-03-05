@@ -1,135 +1,92 @@
 function baps4cbf(action)
-
-base = findobj('Tag','base_figure');
-%setWindowOnTop(base,'false')
-
-switch action
-
-    case 'mix1_button' 
-        greedyMix(-1);        
-
-    case 'mix2_button'
-        greedyPopMix;
-
-    case 'trained_button'
-        trainedMix;
-
-    case 'spatial_button'
-        spatialMixture;
-        showmethebaps;
-        
-    case 'spatial2_button'
-        spatialPopMixture;
-        showmethebaps;
-        
-    case 'linkage_button'
-        linkageMixture_speed;
-        %linkageMixture_ultraspeed;
-        showmethebaps;
-       
-    case 'admix1_button'
-        admix1(-1);
-        showmethebaps;
-    case 'admix2_button'
-        admix2;
-        
-    case 'compare_menu'
-        compare;
-    case 'compare_admix_menu'
-        compare_admix;
-        
-    case 'load_mixture_menu'
-        loadMixture;
-        
-    case 'load_admixture_menu'
-        loadAdmixture;
-        
-    case 'load_spatial_menu'
-        loadSpatial;
-        
-    case 'output_menu'
-        asetaOutputFile;
-
-    case 'remove_outputfile_menu'
-        poistaOutputFile;
-
-    case 'close_menu'
-        closeFile;
-        
-    case 'exit_menu'
-        h0 = findobj('Tag','base_figure'); delete(h0);
-        h0 = findobj('Tag','image_figure'); delete(h0);
-
-    case 'loadfigure_menu'
-        loadFigure;
-
-    case 'plot_coordinates_menu'
-        plotCoordinates;
-
-    case 'partitio_menu'
-        viewPartitio;
-     
-    case 'admix_menu'
-        viewAdmixture;
-    
-    case 'likelihood_menu'
-        viewLoghood;
-        
-    case 'energy_menu'
-        viewEnergy;
-        
-    case 'geneflow_menu'
-        viewGeneflow;
-
-    case 'voronoi_menu'
-        voronoiTessellation;
-
-    case 'varmuus_menu'
-        localUncertainty;
-        
-    case 'changecolor_menu'
-        changeColor;
-        
-    case 'helpdoc'
-        openHelpDoc;
-        
-    case 'helponline'
-        openHelpHtml;
-        
-    case 'about'
-        openAboutWindow;
-    
-    case 'calculate_kl'
-        calculateDis('KL');
-    
-    case 'calculate_nei'
-        calculateDis('Nei');
-
-    case 'calculate_hamming'
-        calculateDis('Hamming');
-        
-    case 'upgma_menu'
-        viewPhylogeny('upgma');
-        
-    case 'nj_menu'
-        viewPhylogeny('nj');
-        
-    case 'mutationplot_menu'
-        mutationPlot(-1);
-        
-    case 'fixk_menu'
-        goToFixedK;
-       
-    case 'partitioncompare_menu'
-        goToPartitionCompare;
-end
-
+    switch action
+        case 'mix1_button'
+            greedyMix(-1);
+        case 'mix2_button'
+            greedyPopMix;
+        case 'trained_button'
+            trainedMix;
+        case 'spatial_button'
+            spatialMixture;
+            showmethebaps;
+        case 'spatial2_button'
+            spatialPopMixture;
+            showmethebaps;
+        case 'linkage_button'
+            linkageMixture_speed;
+            showmethebaps;
+        case 'admix1_button'
+            admix1(-1);
+            showmethebaps;
+        case 'admix2_button'
+            admix2;
+        case 'compare_menu'
+            compare;
+        case 'compare_admix_menu'
+            compare_admix;
+        case 'load_mixture_menu'
+            loadMixture;
+        case 'load_admixture_menu'
+            loadAdmixture;
+        case 'load_spatial_menu'
+            loadSpatial;
+        case 'output_menu'
+            asetaOutputFile;
+        case 'remove_outputfile_menu'
+            poistaOutputFile;
+        case 'close_menu'
+            closeFile;
+        case 'exit_menu'
+            h0 = findobj('Tag','base_figure'); delete(h0);
+            h0 = findobj('Tag','image_figure'); delete(h0);
+        case 'loadfigure_menu'
+            loadFigure;
+        case 'plot_coordinates_menu'
+            plotCoordinates;
+        case 'partitio_menu'
+            viewPartitio;
+        case 'admix_menu'
+            viewAdmixture;
+        case 'likelihood_menu'
+            viewLoghood;
+        case 'energy_menu'
+            viewEnergy;
+        case 'geneflow_menu'
+            viewGeneflow;
+        case 'voronoi_menu'
+            voronoiTessellation;
+        case 'varmuus_menu'
+            localUncertainty;
+        case 'changecolor_menu'
+            changeColor;
+        case 'helpdoc'
+            openHelpDoc;
+        case 'helponline'
+            openHelpHtml;
+        case 'about'
+            openAboutWindow;
+        case 'calculate_kl'
+            calculateDis('KL');
+        case 'calculate_nei'
+            calculateDis('Nei');
+        case 'calculate_hamming'
+            calculateDis('Hamming');
+        case 'upgma_menu'
+            viewPhylogeny('upgma');
+        case 'nj_menu'
+            viewPhylogeny('nj');
+        case 'mutationplot_menu'
+            mutationPlot(-1);
+        case 'fixk_menu'
+            goToFixedK;
+        case 'partitioncompare_menu'
+            goToPartitionCompare;
+    end
 return
 
 %--------------------------------------------------------------------------
 %KUVIEN LATAAMINEN
 %--------------------------------------------------------------------------
-
 
 function loadFigure
 waitALittle;
@@ -141,57 +98,6 @@ fig_file_name = [pathname filename];
 open(fig_file_name);
 
 % ----------------------------
-% Old version
-% ----------------------------
-% % Loads previously saved figure.
-% 
-% waitALittle;
-% [filename,pathname] = uigetfile('*.mat','Load Figure');
-% if (sum(filename)==0) || (sum(pathname)==0)
-%     return;
-% end
-% fig_file_name = [pathname filename];
-% %Figure file format must be *.mat. Ensure it:
-% isMat = isTheFileMatFile(fig_file_name);
-% if isMat == 0
-%     msgbox(['Only figures that have been saved in BAPS can be loaded in BAPS. ' ...
-%         'Those figures have extension ".mat".'],'Error', ...
-%         'error');
-%     return;
-% end;
-% struct_array = load([pathname filename]);
-% if isfield(struct_array,'tiedot')  %Matlab versio
-%     tiedot = struct_array.tiedot;
-%     if ~isfield(tiedot,'info')
-%         disp('Incorrect file format');
-%         return
-%     end
-% elseif isfield(struct_array,'info')  %Mideva versio
-%     tiedot = struct_array;
-% else
-%     disp('Incorrect file format');
-%     return;
-% end
-% 
-% if isfield(tiedot, 'rows')
-%     rows = tiedot.rows;
-%     partition = tiedot.info;
-%     popnames = tiedot.popnames;
-%     viewPopMixPartition(partition, rows, popnames);
-% else
-%     popnames = tiedot.popnames;
-%     info = tiedot.info;
-%     if (size(info,2)>1)
-%         %info on osuudet
-%         osuudet = info;
-%         viewPartition(osuudet,popnames);
-%     else
-%         info = round(info);
-%         partition = info;
-%         viewMixPartition(partition, popnames);
-%     end
-% end
-
 
 function isMat = isTheFileMatFile(filename)
 %Checks that the file 'filename' is of the
@@ -287,31 +193,6 @@ function voronoiTessellation
 % Tekee tulostiedostosta voronoi tessellaation.
 h0 = findobj('Tag','load_menu');
 c = get(h0,'UserData');
-% waitALittle;
-% [filename, pathname] = uigetfile('*.mat', 'Load mixture clustering');
-% %load([pathname filename],'c');
-% struct_array = load([pathname filename]);
-% if isfield(struct_array,'c')  %Matlab versio
-%     c = struct_array.c;
-%     if ~isfield(c,'PARTITION') || ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% elseif isfield(struct_array,'PARTITION')  %Mideva versio
-%     c = struct_array;
-%     if ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% else
-%     disp('Incorrect file format');
-%     return;
-% end
-% 
-% if ~isfield(c, 'pointers')
-%     disp('Coordinate data missing from the result file');
-%     return;
-% end
 
 pointers = c.pointers; vorPoints = c.vorPoints; vorCells = c.vorCells;
 coordinates = c.coordinates; names = c.names;
@@ -338,31 +219,6 @@ function localUncertainty
 
 h0 = findobj('Tag','load_menu');
 c = get(h0,'UserData');
-% waitALittle;
-% [filename, pathname] = uigetfile('*.mat', 'Load mixture clustering');
-% %load([pathname filename],'c');
-% struct_array = load([pathname filename]);
-% if isfield(struct_array,'c')  %Matlab versio
-%     c = struct_array.c;
-%     if ~isfield(c,'PARTITION') || ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% elseif isfield(struct_array,'PARTITION')  %Mideva versio
-%     c = struct_array;
-%     if ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% else
-%     disp('Incorrect file format');
-%     return;
-% end
-% 
-% if ~isfield(c, 'pointers')
-%     disp('Coordinate data missing from the result file');
-%     return;
-% end
 
 pointers = c.pointers; vorPoints = c.vorPoints; vorCells = c.vorCells;
 coordinates = c.coordinates; names = c.names;
@@ -384,38 +240,12 @@ end
 plotVarmuus(vorPoints, vorCells, pointers, varmuus, coordinates, ...
     PARTITION, names);
 
-
-
 %--------------------------------------------------------------------------
 
 function viewPartitio
 
 h0 = findobj('Tag','load_menu');
 c = get(h0,'UserData');
-
-% waitALittle;
-% [filename, pathname] = uigetfile('*.mat', 'Load mixture clustering');
-% %load([pathname filename],'c');
-% if (sum(filename)==0) || (sum(pathname)==0)
-%     return;
-% end
-% struct_array = load([pathname filename]);
-% if isfield(struct_array,'c')  %Matlab versio
-%     c = struct_array.c;
-%     if ~isfield(c,'PARTITION') || ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% elseif isfield(struct_array,'PARTITION')  %Mideva versio
-%     c = struct_array;
-%     if ~isfield(c,'rowsFromInd')
-%         disp('Incorrect file format');
-%         return
-%     end
-% else
-%     disp('Incorrect file format');
-%     return;
-% end
 
 if isequal(c.mixtureType, 'pop') || isequal(c.mixtureType, 'spatialPop')
     viewPopMixPartition(c.groupPartition, c.rows, c.popnames);
@@ -426,18 +256,11 @@ else
 end
 
 function openHelpDoc
-% s = fileparts(which('BAPS4manual.doc'));
-% helpwin(s);
 if strcmp(computer,'PCWIN')
-    % s = fileparts(which('baps4.exe'));
-    % winopen([s '\BAPS4manual.doc']);
     winopen('BAPS5manual.doc');
 end
 
 function openHelpHtml
-% web http://www.rni.helsinki.fi/~jic/bapspage.html
-% web('http://www.rni.helsinki.fi/~jic/bapspage.html','-browser')
-% web http://www.rni.helsinki.fi/~jic/bapspage.html -new;
 if strcmp(computer,'PCWIN')
     dos('start http://www.abo.fi/fak/mnf/mate/jc/software/baps.html'); % For the compiled version
 end
@@ -461,13 +284,6 @@ helpdlg(info,'About');
 
 function viewAdmixture
 
-% waitALittle;
-% [filename, pathname] = uigetfile('*.mat', 'Load admixture results.');
-% if (sum(filename)==0) || (sum(pathname)==0)
-%     return;
-% end
-% %load([pathname filename],'c');
-% struct_array = load([pathname filename]);
 disp('---------------------------------------------------');
 disp('Viewing the admixture result...');
 h0 = findobj('Tag','load_menu');
@@ -475,42 +291,21 @@ c = get(h0,'UserData');
 h0 = findobj('Tag','filename1_text');
 filename = get(h0,'String');
 
-% if isfield(struct_array,'c')  %Matlab versio
-%     c = struct_array.c;
-%     if ~isfield(c,'proportionsIt')
-%         disp('*** ERROR: Incorrect file format');
-%         return
-%     end
-% elseif isfield(struct_array,'proportionsIt')  %Mideva versio
-%     c = struct_array;
-%     if ~isfield(c,'proportionsIt')
-%         disp('*** ERROR: Incorrect file format');
-%         return
-%     end
-% else
-%     disp('*** ERROR: Incorrect file format');
-%     return;
-% end
-
-% mixtureType = c.mixtureType;
-proportionsIt = c.proportionsIt; 
+proportionsIt = c.proportionsIt;
 popnames = c.popnames; partition = c.PARTITION;
 mixtureType = c.mixtureType;
-% if strcmp(mixtureType,'linkage_mix') % For bacterial clustering data
-% if isempty(popnames) || size(popnames,1)==size(partition,1)
-%if  strcmp(mixtureType, 'admix')
     if isempty(popnames)
         ninds = size(partition,1);
         popnames=cell(ninds,2);
         for ind=1:ninds
             popnames{ind,1}=cellstr(num2str(ind));
-        end        
+        end
         popnames(:,2)=num2cell((1:ninds)');
     end
- 
+
     npops = c.npops; % all the clusters including outliers
     admixnpops = c.admixnpops;
-    
+
     if ~isfield(c,'pvalue') % compatiable with old data
         disp('*** WARNING: pvalue is not found in the admixture result.');
         disp('*** WARNING: Old admixture file.');
@@ -520,30 +315,17 @@ mixtureType = c.mixtureType;
     end
     view_admixture(proportionsIt,npops,admixnpops, ...
                          popnames,partition,pvalue,filename);
-%else 
-%    disp('*** ERROR: incorrect admixture data.');
-    % put which variable as the input?
-    % admixnpops = c.admixnpops;
-%     npops = c.npops;
-%     talle = questdlg(['Do you want individual names to be visible in the admixture ' ...
-%         'result graphics?'], 'Names visible?', 'Yes', 'No', 'Yes');
-%     if isequal(talle,'No')
-%         viewPartition2(proportionsIt, [], npops, partition, filename);
-%     else
-%         viewPartition2(proportionsIt, popnames, npops, partition, filename);
-%     end
-% end
 
 %--------------------------------------------------------------------------
 function viewLoghood
     view_loglikelihood;
-        
+
 function viewEnergy
     view_energy;
             %--------------------------------------------------------------------------
  function viewGeneflow
     view_geneflow;
-                
+
 %--------------------------------------------------------------------------
 function changeColor()
    h0 = findobj('Tag','base_figure');
@@ -560,11 +342,9 @@ function changeColor()
 %-----------------------------------------------------------------------
 function showmethebaps()
 h0 = findobj('Tag','base_figure');
-%setWindowOnTop(h0,'true')
 goToDefault
 h0 = findobj('Tag','load_menu');
 set(h0,'UserData',[]);
-%setWindowOnTop(h0,'false')
 
 
 %-----------------------------------------------------------------------
@@ -572,7 +352,6 @@ function loadMixture
 
 waitALittle;
 [filename, pathname] = uigetfile('*.mat', 'Load mixture result');
-%load([pathname filename],'c');
 if (sum(filename)==0) || (sum(pathname)==0)
     return;
 end
@@ -643,7 +422,6 @@ function loadSpatial
 
 waitALittle;
 [filename, pathname] = uigetfile('*.mat', 'Load spatial mixture/admixture clustering');
-%load([pathname filename],'c');
 if (sum(filename)==0) || (sum(pathname)==0)
     return;
 end
@@ -759,7 +537,6 @@ waitALittle;
 if (sum(filename)==0) || (sum(pathname)==0)
     return;
 end
-%load([pathname filename],'c');
 disp('---------------------------------------------------');
 disp('In loading the admixture result...');
 struct_array = load([pathname filename]);
@@ -807,12 +584,7 @@ function goToAdmixtureAnalysis
 set(findobj('Tag','graph_menu'), 'Enable','on');
 set(findobj('Tag','admix_menu'), 'Enable','on');
 set(findobj('Tag','geneflow_menu'), 'Enable','on');
-% set(findobj('Tag','distances_menu'), 'Enable','on');
-% set(findobj('Tag','kl_menu'), 'Enable','on');
-% set(findobj('Tag','nei_menu'), 'Enable','on');
 set(findobj('Tag','close_menu'), 'Enable','on');
-% set(findobj('Tag','likelihood_menu'), 'Enable','on');
-
 
 %--------------------------------------------------------------------------
 function calculateDis(type)
@@ -836,8 +608,8 @@ if npops > 1
     maxnoalle = size(COUNTS,1);
     nloci = size(COUNTS,2);
     d = zeros(maxnoalle, nloci, npops);
-   
-    
+
+
     switch type
         case 'KL'
             prior = adjprior;
@@ -846,7 +618,6 @@ if npops > 1
             prior(1,nollia)=1;
             for pop1 = 1:npops
                 d(:,:,pop1) = (squeeze(COUNTS(:,:,pop1))+prior) ./ repmat(sum(squeeze(COUNTS(:,:,pop1))+prior),maxnoalle,1);
-                %dist1(pop1) = (squeeze(COUNTS(:,:,pop1))+adjprior) ./ repmat((SUMCOUNTS(pop1,:)+adjprior), maxnoalle, 1);
             end
 
             ekarivi = num2str(npops);
@@ -855,7 +626,6 @@ if npops > 1
             disp('--------------------------------------');
             disp(ekarivi);
             for pop1 = 1:npops
-                % rivi = [blanks(2-floor(log10(pop1))) num2str(pop1) '  '];
                 for pop2 = 1:pop1-1
                     dist1 = d(:,:,pop1); dist2 = d(:,:,pop2);
                     div12 = sum(sum(dist1.*log2((dist1+10^-10) ./ (dist2+10^-10))))/nloci;
@@ -868,7 +638,6 @@ if npops > 1
        case 'Nei'
            for pop1 = 1:npops
                d(:,:,pop1) = (squeeze(COUNTS(:,:,pop1))) ./ repmat(sum(squeeze(COUNTS(:,:,pop1))),maxnoalle,1);
-               %dist1(pop1) = (squeeze(COUNTS(:,:,pop1))+adjprior) ./ repmat((SUMCOUNTS(pop1,:)+adjprior), maxnoalle, 1);
            end
 
            ekarivi = num2str(npops);
@@ -877,7 +646,6 @@ if npops > 1
            disp('--------------------------------------');
            disp(ekarivi);
            for pop1 = 1:npops
-                % rivi = [blanks(2-floor(log10(pop1))) num2str(pop1) '  '];
                 for pop2 = 1:pop1-1
                     dist1 = d(:,:,pop1); dist2 = d(:,:,pop2);
                     div1 = sum(sum(dist1.*dist2));
@@ -885,7 +653,7 @@ if npops > 1
                     div = -log(div1/div2);
                     dist_mat(pop1,pop2) = div;
                 end
-           end    
+           end
         case 'Hamming'
            ekarivi = num2str(npops);
            disp('--------------------------------------');
@@ -899,7 +667,7 @@ if npops > 1
                 end
             end
     end
-    
+
 end
 
 dist_mat = dist_mat + dist_mat'; % make it symmetric
@@ -918,7 +686,6 @@ diary off
 talle = questdlg(['Do you want to save the distance matrix in PHYLIP format? '], ...
     'Save distance matrix?','Yes','No','Yes');
 if isequal(talle,'Yes')
-    %%%waitALittle;
     [filename, pathname] = uiputfile('*.txt','Save results as');
 
     if (sum(filename)==0) || (sum(pathname)==0)
@@ -948,7 +715,7 @@ if abs(div)<100
     if arvo>0
         mjono(1) = num2str(arvo);
     end
-    
+
 else
     suurinYks = floor(log10(div));
     mjono(6) = num2str(suurinYks);
@@ -975,7 +742,7 @@ dist = dist1/length1;
 function digit = palautaYks(num,yks)
 % palauttaa luvun num 10^yks termin kertoimen
 % string:in?
-% yks täytyy olla kokonaisluku, joka on 
+% yks täytyy olla kokonaisluku, joka on
 % vähintään -1:n suuruinen. Pienemmill?
 % luvuilla tapahtuu jokin pyöristysvirhe.
 
@@ -987,7 +754,3 @@ else
     digit = floor(rem(digit,10));
 end
 digit = num2str(digit);
-
-
-
-
