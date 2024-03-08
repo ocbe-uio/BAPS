@@ -11,7 +11,7 @@ BAPS_package/run_baps6.sh: $(BAPSFOLDERS)
 	fi
 
 	@echo -n "Adding BAPS to MATLAB path... "
-	@$(MATLABEXEC) $(MATLABOPTS) "run('add_BAPS_to_path.m'); exit;"
+	@$(MATLABEXEC) $(MATLABOPTS) "run('general/add_BAPS_to_path.m'); exit;"
 	@echo "done"
 
 	@echo "Compiling BAPS"
