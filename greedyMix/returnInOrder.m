@@ -15,8 +15,9 @@ function inds = returnInOrder(inds, pop, globalRows, data, ...
     diffInCounts = computeDiffInCounts(rows, size(COUNTS,1), size(COUNTS,2), data);
     diffInSumCounts = sum(diffInCounts);
 
-    COUNTS(:,:,pop) = COUNTS(:,:,pop)-diffInCounts;
-    SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:)-diffInSumCounts;
+    diffCounts = COUNTS(:,:,pop) - diffInCounts; % TODO: workaround. Check if appropriate!
+    COUNTS(:,:,pop) = max(diffCounts, 0); % Ensure non-negative values % TODO: workaround. Check if appropriate!
+    SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:) - diffInSumCounts;
     apuTaulu(i, 2) = computePopulationLogml(pop, adjprior, priorTerm);
     COUNTS(:,:,pop) = COUNTS(:,:,pop) + diffInCounts;
     SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:) + diffInSumCounts;
