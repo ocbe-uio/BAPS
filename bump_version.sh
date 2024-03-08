@@ -4,7 +4,7 @@
 while IFS= read -r line
 do
   # Check if the line contains the version vector
-  if [[ $line == *"version = "* ]]; then
+  if [[ $line == *"ver = "* ]]; then
     # Extract the version vector
     version=$(echo $line | cut -d'=' -f2 | tr -d '[];')
 
@@ -18,16 +18,16 @@ do
     version=$(IFS=' '; echo "${versionArray[*]}")
 
     # Reconstruct the line
-    line="  version = [$version];"
+    line="  ver = [$version];"
   fi
 
   # Print the line
   echo "$line"
-done < "general/baps.m" > "general/baps_new.m"
+done < "baps.m" > "baps_new.m"
 
 
 # Replace the old file with the new file
-mv "general/baps_new.m" "general/baps.m"
+mv "baps_new.m" "baps.m"
 
 # Final message (useful for commit)
 version_string=$(echo "$version" | tr ' ' '.')

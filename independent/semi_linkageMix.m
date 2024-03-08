@@ -22,14 +22,14 @@ global TRAIN_SP_SUMCOUNTS;
 
 clearGlobalVars;
 
-% noalle = c_train.noalle; 
-% adjprior = c_train.adjprior; %priorTerm = c.priorTerm; 
+% noalle = c_train.noalle;
+% adjprior = c_train.adjprior; %priorTerm = c.priorTerm;
 % rowsFromInd = c_train.rowsFromInd;
 adjprior_cq = c_train.adjprior_cq;
 adjprior_sp = c_train.adjprior_sp;
 
 counts_cq = c_test.counts_cq;
-counts_sp = c_test.counts_sp; 
+counts_sp = c_test.counts_sp;
 
 % UPDATE the priors by the following constants from the training data
 % Lu Cheng, 17.02.2010 ------------------------ %
@@ -75,11 +75,11 @@ for run = 1:nruns
     else
         npops = npopsTable(run);
     end
-    
+
     dispLine;
     disp(['Run ' num2str(run) '/' num2str(nruns) ...
         ', maximum number of populations ' num2str(npops) '.']);
-    
+
     %----- added by Lu Cheng, 23.02.2010------%
     % modify the training data so it fits the dimension of given population
     % number
@@ -98,35 +98,35 @@ for run = 1:nruns
         TRAIN_CQ_COUNTS(:,:,1:n_train_clusters) = train_counts_cq;
         TRAIN_SP_COUNTS(:,:,1:n_train_clusters) = train_counts_sp;
     end
-    
+
     TRAIN_CQ_SUMCOUNTS = squeeze(sum(TRAIN_CQ_COUNTS(:,:,:),1))';
     TRAIN_SP_SUMCOUNTS = squeeze(sum(TRAIN_SP_COUNTS(:,:,:),1))';
-    
+
     clear r1 c1 p1 r2 c2 p2
     %---------------------------------------%
 
     if IS_SINGLE_SAMPLE
-        PARTITION = 1; 
+        PARTITION = 1;
     else
-        PARTITION = admixture_initialization(npops, Z);
+        PARTITION = admixture_initialization_2(npops, Z);
     end
 
     [cq_counts, cq_sumcounts] = calCounts(counts_cq, npops);
     CQ_COUNTS = cq_counts;  clear cq_counts;
     CQ_SUMCOUNTS = cq_sumcounts; clear cq_sumcounts;
-    
+
     [sp_counts, sp_sumcounts] = calCounts(counts_sp,npops);
     SP_COUNTS = sp_counts;  clear sp_counts;
     SP_SUMCOUNTS = sp_sumcounts; clear sp_sumcounts;
 
     logml = computeLogml(adjprior_cq, adjprior_sp);
     POP_LOGML = computePopulationLogml(1:npops,adjprior_cq, adjprior_sp);
-    
+
     %disp(POP_LOGML');
 
     if logml>worstLogml
         [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-        if (added==1)  
+        if (added==1)
             [worstLogml, worstIndex] = min(partitionSummary(:,2));
         end
     end
@@ -146,7 +146,7 @@ for run = 1:nruns
 
     while ready ~= 1
         changesMade = 0;
-        
+
         disp(['Performing steps: ' num2str(roundTypes)]);
 
         for n = 1:length(roundTypes)
@@ -163,13 +163,13 @@ for run = 1:nruns
                     indSpCounts = uint16(counts_sp(:,:,ind));
                     changesInLogml = computeChanges(ind, adjprior_cq, ...
                         adjprior_sp, indCqCounts, indSpCounts);
-                    
+
                     [maxChange, i2] = max(changesInLogml);
 
                     if (i1~=i2 && maxChange>1e-5)
-                        
+
                         %disp(changesInLogml);
-                        
+
                         % Individual is moved
                         changesMade = 1;
                         if changesMadeNow == 0
@@ -183,7 +183,7 @@ for run = 1:nruns
 
                         if logml>worstLogml
                             [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-                            if (added==1)  
+                            if (added==1)
                                 [worstLogml, worstIndex] = min(partitionSummary(:,2));
                             end
                         end
@@ -193,15 +193,15 @@ for run = 1:nruns
                 if changesMadeNow == 0
                     tested(round) = 1;
                 end
-                
-                
+
+
                 %disp(PARTITION');  % for test
 
             elseif round==2  % Combining two populations
                 maxChange = 0;
-                
+
                 %n_train_clusters % see line 32, Lu Cheng, 04.03.2010
-                
+
 %                 for pop = 1:npops
 %                     changesInLogml = computeChanges2(pop, adjprior_cq, adjprior_sp); % all inds in 'pop' is moved to other clusters
 %                     [biggest, index] = max(changesInLogml);
@@ -213,7 +213,7 @@ for run = 1:nruns
 %                     end
 %                     disp(changesInLogml');
 %                 end
-                
+
                 % modified by Lu Cheng, 04.03.2010
                 % here we only combine the outer clusters with other
                 % outerclusters or training clusters. In case there is only
@@ -232,27 +232,27 @@ for run = 1:nruns
                             end
                         end
                     end
-                    
+
                     %fprintf('maxChange: %d\n',maxChange);
                 end
-                
+
 
                 if maxChange>1e-5
                     disp('action 2');
                     changesMade = 1;
                     tested = zeros(nRoundTypes,1);
-                    
+
                     updateGlobalVariables2(i1, i2, adjprior_cq, adjprior_sp); %all inds in i1 are moved to i2
                     logml = logml + maxChange;
                     if logml>worstLogml
                         [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-                        if (added==1)  
-                            [worstLogml, worstIndex] = min(partitionSummary(:,2));  
+                        if (added==1)
+                            [worstLogml, worstIndex] = min(partitionSummary(:,2));
                         end
                     end
-                    
+
                     %disp(PARTITION');  % for test
-                    
+
                 else
                     tested(round) = 1;
                 end
@@ -305,8 +305,8 @@ for run = 1:nruns
 
                     if logml>worstLogml
                         [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-                        if (added==1)  
-                            [worstLogml, worstIndex] = min(partitionSummary(:,2));  
+                        if (added==1)
+                            [worstLogml, worstIndex] = min(partitionSummary(:,2));
                         end
                     end
                 else
@@ -376,8 +376,8 @@ for run = 1:nruns
                         changesMade = 1;
                         if logml>worstLogml
                             [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-                            if (added==1)  
-                                [worstLogml, worstIndex] = min(partitionSummary(:,2)); 
+                            if (added==1)
+                                [worstLogml, worstIndex] = min(partitionSummary(:,2));
                             end
                         end
                     else
@@ -467,8 +467,8 @@ for run = 1:nruns
                             logml = logml + totalChangeInLogml;
                             if logml>worstLogml
                                 [partitionSummary, added] = addToSummary(logml, partitionSummary, worstIndex, n_train_clusters);
-                                if (added==1)  
-                                    [worstLogml, worstIndex] = min(partitionSummary(:,2));  
+                                if (added==1)
+                                    [worstLogml, worstIndex] = min(partitionSummary(:,2));
                                 end
                             end
                             disp('action 7');
@@ -528,7 +528,7 @@ for run = 1:nruns
 
     end
     % Saving results
-   
+
     npops = removeEmptyPops(n_train_clusters,npops);
     POP_LOGML = computePopulationLogml(1:npops, adjprior_cq, adjprior_sp);
 
@@ -563,7 +563,7 @@ c_result.partitionSummary = partitionSummary;
 
 % Calculate the posterior probabilities if a sample i is moved to cluster
 % j, from LOGDIFF (nsample*npops matrix)
-% Each row of LOGDIFF represents logml changes if the sample is moved to 
+% Each row of LOGDIFF represents logml changes if the sample is moved to
 % the corresponding cluster
 % See page 24 in BAPS manual
 % added by Lu Cheng, 29.03.2010
@@ -580,7 +580,7 @@ c_result.clusterProbTable = clusterProbTable;
 % The next three functions are for computing the initial partition
 % according to the distance between the individuals
 
-function initial_partition = admixture_initialization(nclusters,Z)
+function initial_partition = admixture_initialization_2(nclusters,Z)
 initial_partition = cluster_own(Z,nclusters);
 
 %--------------------------------------------------------------------------
@@ -887,7 +887,7 @@ for pop2 = 1:npops2
         CQ_SUMCOUNTS(i2,:) = CQ_SUMCOUNTS(i2,:)+repmat(sumCq,[npops-1 1]);
         SP_COUNTS(:,:,i2) = SP_COUNTS(:,:,i2)+repmat(indSpCounts, [1 1 npops-1]);
         SP_SUMCOUNTS(i2,:) = SP_SUMCOUNTS(i2,:)+ repmat(sumSp,[npops-1 1]);
-    
+
         new_i2_logml = computePopulationLogml(i2, adjprior_cq, adjprior_sp)';
 
         CQ_COUNTS(:,:,i2) = CQ_COUNTS(:,:,i2)-repmat(indCqCounts, [1 1 npops-1]);
@@ -1110,7 +1110,7 @@ global PARTITION; PARTITION = [];
 global POP_LOGML; POP_LOGML = [];
 global LOGDIFF; LOGDIFF = [];
 
-global TRAIN_CQ_COUNTS;    TRAIN_CQ_COUNTS=[];  
+global TRAIN_CQ_COUNTS;    TRAIN_CQ_COUNTS=[];
 global TRAIN_CQ_SUMCOUNTS; TRAIN_CQ_SUMCOUNTS = [];
 global TRAIN_SP_COUNTS;    TRAIN_SP_COUNTS = [];
 global TRAIN_SP_SUMCOUNTS; TRAIN_SP_SUMCOUNTS = [];
@@ -1145,7 +1145,7 @@ global TRAIN_SP_SUMCOUNTS;
 % SP_COUNTS = SP_COUNTS(:,:,notEmpty);
 % SP_SUMCOUNTS = SP_SUMCOUNTS(notEmpty,:);
 % LOGDIFF = LOGDIFF(:,notEmpty);
-% 
+%
 % for n=1:length(notEmpty)
 %     PARTITION(PARTITION==notEmpty(n)) = n;
 % end
@@ -1159,18 +1159,18 @@ if isempty(pops) && npops>n_train_clusters
     CQ_SUMCOUNTS(n_train_clusters+1:npops,:) = [];
     SP_COUNTS(:,:,n_train_clusters+1:npops) = [];
     SP_SUMCOUNTS(n_train_clusters+1:npops,:) = [];
-    
+
     TRAIN_CQ_COUNTS(:,:,n_train_clusters+1:npops) = [];
     TRAIN_CQ_SUMCOUNTS(n_train_clusters+1:npops,:) = [];
     TRAIN_SP_COUNTS(:,:,n_train_clusters+1:npops) = [];
     TRAIN_SP_SUMCOUNTS(n_train_clusters+1:npops,:) = [];
-    
+
     LOGDIFF(:,n_train_clusters+1:npops) = [];
     new_npops = n_train_clusters;
     return
 elseif isempty(pops)
     % do nothing
-    
+
     new_npops = npops;
     return
 else
@@ -1181,22 +1181,22 @@ else
         CQ_SUMCOUNTS(n_train_clusters+i,:) = CQ_SUMCOUNTS(pops(i),:);
         SP_COUNTS(:,:,n_train_clusters+i) = SP_COUNTS(:,:,pops(i));
         SP_SUMCOUNTS(n_train_clusters+i,:) = SP_SUMCOUNTS(pops(i),:);
-        
+
         LOGDIFF(:,n_train_clusters+i) = LOGDIFF(:,pops(i));
     end
-    
+
     CQ_COUNTS(:,:,n_train_clusters+n_nonempty+1:npops) = [];
     CQ_SUMCOUNTS(n_train_clusters+n_nonempty+1:npops,:) = [];
     SP_COUNTS(:,:,n_train_clusters+n_nonempty+1:npops) = [];
     SP_SUMCOUNTS(n_train_clusters+n_nonempty+1:npops,:) = [];
-    
+
     TRAIN_CQ_COUNTS(:,:,n_train_clusters+n_nonempty+1:npops) = [];
     TRAIN_CQ_SUMCOUNTS(n_train_clusters+n_nonempty+1:npops,:) = [];
     TRAIN_SP_COUNTS(:,:,n_train_clusters+n_nonempty+1:npops) = [];
     TRAIN_SP_SUMCOUNTS(n_train_clusters+n_nonempty+1:npops,:) = [];
-    
+
     LOGDIFF(:,n_train_clusters+n_nonempty+1:npops) = [];
-    
+
     new_npops = n_train_clusters+n_nonempty;
 end
 
@@ -1466,5 +1466,3 @@ else
 end
 
 %--------------------------------------------------------------------------
-
-
