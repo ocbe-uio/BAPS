@@ -92,7 +92,8 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
       PARTITION(i) = initialPartition(apu(1));
     end
 
-    COUNTS = counts; SUMCOUNTS = sumcounts;
+    COUNTS = counts;
+    SUMCOUNTS = sumcounts;
     POP_LOGML = computePopulationLogml(1:npops, adjprior, priorTerm);
     LOGDIFF = repmat(-Inf,ninds,npops);
     clear initialPartition; clear counts; clear sumcounts;
@@ -259,7 +260,6 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
             kokeiltu(round)=1;
           end
         elseif round == 5 || round == 6
-          disp(round); % TEMP
           j=0;
           muutettu = 0;
           poplogml = POP_LOGML;

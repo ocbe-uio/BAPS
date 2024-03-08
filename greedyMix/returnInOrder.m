@@ -18,8 +18,8 @@ function inds = returnInOrder(inds, pop, globalRows, data, ...
     COUNTS(:,:,pop) = COUNTS(:,:,pop)-diffInCounts;
     SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:)-diffInSumCounts;
     apuTaulu(i, 2) = computePopulationLogml(pop, adjprior, priorTerm);
-    COUNTS(:,:,pop) = COUNTS(:,:,pop)+diffInCounts;
-    SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:)+diffInSumCounts;
+    COUNTS(:,:,pop) = COUNTS(:,:,pop) + diffInCounts;
+    SUMCOUNTS(pop,:) = SUMCOUNTS(pop,:) + diffInSumCounts;
   end
   apuTaulu = sortrows(apuTaulu,2);
   inds = apuTaulu(ninds:-1:1,1);
