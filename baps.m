@@ -3,7 +3,7 @@ function baps(file, file_type, analysis, partitionCompare)
   addpath(genpath(cd));
 
   % Welcome message
-  ver = [6 0 0 9001];
+  ver = [6 0 0 9002];
   versionStr = sprintf('%d.%d.%d.%d', ver(1), ver(2), ver(3), ver(4));
   disp(['Welcome to BAPS ' versionStr]);
 
