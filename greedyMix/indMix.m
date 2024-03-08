@@ -12,8 +12,12 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
   global LOGDIFF;
   clearGlobalVars;
 
-  noalle = c.noalle; rows = c.rows; data = c.data;
-  adjprior = c.adjprior; priorTerm = c.priorTerm; rowsFromInd = c.rowsFromInd;
+  noalle = c.noalle;
+  rows = c.rows;
+  data = c.data;
+  adjprior = c.adjprior;
+  priorTerm = c.priorTerm;
+  rowsFromInd = c.rowsFromInd;
 
   if isfield(c,'dist')
     dist = c.dist; Z = c.Z;
