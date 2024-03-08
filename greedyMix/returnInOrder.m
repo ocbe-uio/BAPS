@@ -4,7 +4,8 @@ function inds = returnInOrder(inds, pop, globalRows, data, ...
   % se, jonka poistaminen populaatiosta pop nostaisi logml:n
   % arvoa eniten.
 
-  global COUNTS;      global SUMCOUNTS;
+  global COUNTS;
+  global SUMCOUNTS;
   ninds = length(inds);
   apuTaulu = [inds, zeros(ninds,1)];
 

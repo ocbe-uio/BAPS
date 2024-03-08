@@ -259,6 +259,7 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
             kokeiltu(round)=1;
           end
         elseif round == 5 || round == 6
+          disp(round); % TEMP
           j=0;
           muutettu = 0;
           poplogml = POP_LOGML;
@@ -278,8 +279,7 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
               aputaulu = sortrows(aputaulu,2);
               inds = aputaulu(:,1)';
             elseif round == 6
-              inds = returnInOrder(inds, pop, ...
-              rows, data, adjprior, priorTerm);
+              inds = returnInOrder(inds, pop, rows, data, adjprior, priorTerm);
             end
 
             i = 0;
