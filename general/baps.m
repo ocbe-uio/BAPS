@@ -1,26 +1,37 @@
-function baps
-  version = [6 0 0 9001];
-  versionStr = sprintf('%d.%d.%d.%d', version(1), version(2), version(3), version(4));
+function baps(file, file_type, analysis)
+  % Welcome message
+  ver = [6 0 0 9001];
+  versionStr = sprintf('%d.%d.%d.%d', ver(1), ver(2), ver(3), ver(4));
   disp(['Welcome to BAPS ' versionStr]);
-  while true
+
+  % Requesting analysis if not provided
+  if nargin < 2 || isempty(analysis)
     prompt = ['Please select the function you want to run ' ...
       '(1: greedyMix, 2: greedyPopMix): '];
-    choice = input(prompt, 's');
-    if isempty(choice)
-      disp('Exiting BAPS');
-      return;
-    end
-    switch choice
+    analysis = input(prompt, 's');
+    switch analysis
       case '1'
-        disp('Clustering of individuals');
-        greedyMix(-1);
-        break;
+        analysis = 'greedyMix';
       case '2'
-        disp('Clustering of groups of individuals');
-        greedyPopMix;
-        break;
+        analysis = 'greedyPopMix';
       otherwise
         disp('Invalid choice. Please try again.');
     end
+    if isempty(analysis)
+      disp('Exiting BAPS');
+      return;
+    end
+  end
+
+  % Dispatching analysis
+  switch analysis
+    case 'greedyMix'
+      disp('Clustering of individuals');
+      greedyMix(file, file_type);
+    case 'greedyPopMix'
+      disp('Clustering of groups of individuals');
+      greedyPopMix;
+    otherwise
+      disp('Invalid choice. Please try again.');
   end
 end
