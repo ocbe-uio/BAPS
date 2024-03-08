@@ -1,4 +1,4 @@
-function greedyMix(tietue, file_type)
+function greedyMix(tietue, file_type, partitionCompare)
 
   % check whether fixed k mode is selected
   h0 = findobj('Tag','fixk_menu');
@@ -14,7 +14,9 @@ function greedyMix(tietue, file_type)
   h1 = findobj('Tag','partitioncompare_menu');
   partitionCompare = get(h1, 'userdata');
 
-  process_data(tietue, file_type);
+  % Processing data
+  tietue = process_data(tietue, file_type, partitionCompare);
+
   % Extract elements from pre-processed data
   data = double(tietue.data);
   rowsFromInd = tietue.rowsFromInd;
@@ -630,161 +632,8 @@ function T = clusternum(X, T, k, c)
 
 
 end
-%---------------------------------------------------------------------------------------
 
-
-function [newData, rowsFromInd, alleleCodes, noalle, adjprior, priorTerm] = ...
-  handleData(raw_data)
-  % Alkuper‰isen datan viimeinen sarake kertoo, milt?yksilˆlt?
-  % kyseinen rivi on per‰isin. Funktio tutkii ensin, ett?montako
-  % rivi?maksimissaan on per‰isin yhdelt?yksilˆlt? jolloin saadaan
-  % tiet‰‰ onko kyseess?haploidi, diploidi jne... T‰m‰n j‰lkeen funktio
-  % lis‰‰ tyhji?rivej?niille yksilˆille, joilta on per‰isin v‰hemm‰n
-  % rivej?kuin maksimim‰‰r?
-  %   Mik‰li jonkin alleelin koodi on =0, funktio muuttaa t‰m‰n alleelin
-  % koodi pienimm‰ksi koodiksi, joka isompi kuin mik‰‰n k‰ytˆss?oleva koodi.
-  % T‰m‰n j‰lkeen funktio muuttaa alleelikoodit siten, ett?yhden lokuksen j
-  % koodit saavat arvoja v‰lill?1,...,noalle(j).
-  data = raw_data;
-  nloci=size(raw_data,2)-1;
-
-  dataApu = data(:,1:nloci);
-  nollat = find(dataApu==0);
-  if ~isempty(nollat)
-    isoinAlleeli = max(max(dataApu));
-    dataApu(nollat) = isoinAlleeli+1;
-    data(:,1:nloci) = dataApu;
-  end
-  dataApu = []; nollat = []; isoinAlleeli = [];
-
-  noalle=zeros(1,nloci);
-  alleelitLokuksessa = cell(nloci,1);
-  for i=1:nloci
-    alleelitLokuksessaI = unique(data(:,i));
-    alleelitLokuksessa{i,1} = alleelitLokuksessaI(find(alleelitLokuksessaI>=0));
-    noalle(i) = length(alleelitLokuksessa{i,1});
-  end
-  alleleCodes = zeros(max(noalle),nloci);
-  for i=1:nloci
-    alleelitLokuksessaI = alleelitLokuksessa{i,1};
-    puuttuvia = max(noalle)-length(alleelitLokuksessaI);
-    alleleCodes(:,i) = [alleelitLokuksessaI; zeros(puuttuvia,1)];
-  end
-
-  for loc = 1:nloci
-    for all = 1:noalle(loc)
-      data(find(data(:,loc)==alleleCodes(all,loc)), loc)=all;
-    end;
-  end;
-
-  nind = max(data(:,end));
-  nrows = size(data,1);
-  ncols = size(data,2);
-  rowsFromInd = zeros(nind,1);
-  for i=1:nind
-    rowsFromInd(i) = length(find(data(:,end)==i));
-  end
-  maxRowsFromInd = max(rowsFromInd);
-  a = -999;
-  emptyRow = repmat(a, 1, ncols);
-  lessThanMax = find(rowsFromInd < maxRowsFromInd);
-  missingRows = maxRowsFromInd*nind - nrows;
-  data = [data; zeros(missingRows, ncols)];
-  pointer = 1;
-  for ind=lessThanMax'    %K‰y l‰pi ne yksilˆt, joilta puuttuu rivej?
-    miss = maxRowsFromInd-rowsFromInd(ind);  % T‰lt?yksilˆlt?puuttuvien lkm.
-    for j=1:miss
-      rowToBeAdded = emptyRow;
-      rowToBeAdded(end) = ind;
-      data(nrows+pointer, :) = rowToBeAdded;
-      pointer = pointer+1;
-    end
-  end
-  data = sortrows(data, ncols);   % Sorttaa yksilˆiden mukaisesti
-  newData = data;
-  rowsFromInd = maxRowsFromInd;
-
-  adjprior = zeros(max(noalle),nloci);
-  priorTerm = 0;
-  for j=1:nloci
-    adjprior(:,j) = [repmat(1/noalle(j), [noalle(j),1]) ; ones(max(noalle)-noalle(j),1)];
-    priorTerm = priorTerm + noalle(j)*gammaln(1/noalle(j));
-  end
-
-
-end
 %----------------------------------------------------------------------------------------
-
-
-function [Z, dist] = newGetDistances(data, rowsFromInd)
-
-  ninds = max(data(:,end));
-  nloci = size(data,2)-1;
-  riviLkm = nchoosek(ninds,2);
-
-  empties = find(data<0);
-  data(empties)=0;
-  data = uint8(data);   % max(noalle) oltava <256
-
-  pariTaulu = zeros(riviLkm,2);
-  aPointer=1;
-  for a=1:ninds-1
-    pariTaulu(aPointer:aPointer+ninds-1-a,1) = ones(ninds-a,1)*a;
-    pariTaulu(aPointer:aPointer+ninds-1-a,2) = (a+1:ninds)';
-    aPointer = aPointer+ninds-a;
-  end
-
-  eka = pariTaulu(:,ones(1,rowsFromInd));
-  eka = eka * rowsFromInd;
-  miinus = repmat(rowsFromInd-1 : -1 : 0, [riviLkm 1]);
-  eka = eka - miinus;
-
-  toka = pariTaulu(:,ones(1,rowsFromInd)*2);
-  toka = toka * rowsFromInd;
-  toka = toka - miinus;
-
-  %eka = uint16(eka);
-  %toka = uint16(toka);
-
-  summa = zeros(riviLkm,1);
-  vertailuja = zeros(riviLkm,1);
-
-  clear pariTaulu; clear miinus;
-
-  x = zeros(size(eka));    x = uint8(x);
-  y = zeros(size(toka));   y = uint8(y);
-
-  for j=1:nloci;
-
-    for k=1:rowsFromInd
-      x(:,k) = data(eka(:,k),j);
-      y(:,k) = data(toka(:,k),j);
-    end
-
-    for a=1:rowsFromInd
-      for b=1:rowsFromInd
-        vertailutNyt = double(x(:,a)>0 & y(:,b)>0);
-        vertailuja = vertailuja + vertailutNyt;
-        lisays = (x(:,a)~=y(:,b) & vertailutNyt);
-        summa = summa+double(lisays);
-      end
-    end
-  end
-
-  clear x;    clear y;   clear vertailutNyt;
-  nollat = find(vertailuja==0);
-  dist = zeros(length(vertailuja),1);
-  dist(nollat) = 1;
-  muut = find(vertailuja>0);
-  dist(muut) = summa(muut)./vertailuja(muut);
-  clear summa; clear vertailuja;
-
-  Z = linkage(dist');
-
-
-end
-%----------------------------------------------------------------------------------------
-
 
 function [Z, distances]=getDistances(data_matrix,nclusters)
 
@@ -1377,22 +1226,6 @@ function dist2 = laskeOsaDist(inds2, dist, ninds)
 end
 
 %--------------------------------------------------------
-
-function ninds = testaaOnkoKunnollinenBapsData(data)
-  %Tarkastaa onko viimeisess?sarakkeessa kaikki
-  %luvut 1,2,...,n johonkin n:‰‰n asti.
-  %Tarkastaa lis‰ksi, ett?on v‰hint‰‰n 2 saraketta.
-  if size(data,1)<2
-    ninds = 0; return;
-  end
-  lastCol = data(:,end);
-  ninds = max(lastCol);
-  if ~isequal((1:ninds)',unique(lastCol))
-    ninds = 0; return;
-  end
-
-end
-%--------------------------------------------------------------------------
 
 function [emptyPop, pops] = findEmptyPop(npops)
   % Palauttaa ensimm‰isen tyhj‰n populaation indeksin. Jos tyhji?
