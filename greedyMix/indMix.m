@@ -1,4 +1,5 @@
 function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
+  dispText = true;
   % Greedy search algorithm with unknown number of classes for regular
   % clustering.
   % Input npops is not used if called by greedyMix or greedyPopMix.
@@ -84,8 +85,7 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
     ninds = size(rows,1);
 
     initialPartition = admixture_initialization(initData, npops, Z);
-    [sumcounts, counts, logml] = ...
-    initialCounts(initialPartition, data, npops, rows, noalle, adjprior);
+    [sumcounts, counts, logml] = initialCounts(initialPartition, data, npops, rows, noalle, adjprior);
     PARTITION = zeros(ninds, 1);
     for i=1:ninds
       apu = rows(i);
@@ -96,7 +96,6 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
     SUMCOUNTS = sumcounts;
     POP_LOGML = computePopulationLogml(1:npops, adjprior, priorTerm);
     LOGDIFF = repmat(-Inf,ninds,npops);
-    clear initialPartition; clear counts; clear sumcounts;
 
     % PARHAAN MIXTURE-PARTITION ETSIMINEN
     nRoundTypes = 7;
@@ -131,8 +130,7 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
           muutosNyt = 0;
           for ind = inds
             i1 = PARTITION(ind);
-            [muutokset, diffInCounts] = laskeMuutokset(ind, rows, ...
-            data, adjprior, priorTerm);
+            [muutokset, diffInCounts] = laskeMuutokset(ind, rows, data, adjprior, priorTerm);
 
             if round==1
               [maxMuutos, i2] = max(muutokset);
