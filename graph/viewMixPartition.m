@@ -33,10 +33,10 @@ for i=1:nind
     % Suhteellisten osuuksien laskeminen
     pop = partition(i);
     pop = find(eiTyhjatPopulaatiot==pop);
-           
+
     % Pylv‰‰n piirt‰minen
     h0 =patch([i-1, i, i, i-1], [0, 0, 1, 1], varit(pop,:));
-    set(h0,'EdgeColor','none'); % Midevaa varten kommentoitava!   
+    set(h0,'EdgeColor','none'); % Midevaa varten kommentoitava!
 
 end
 
@@ -48,13 +48,13 @@ if ~isempty(popnames)
         firstInd = popnames{i,2};
         if size(popnames,1) ~=nind
             line([firstInd-1, firstInd-1], [0,1], 'Color', 'k');  %Populaatioiden rajat
-        end            
+        end
         if i<npops
             x_paikka = popnames{i,2}-1+(popnames{i+1,2}-popnames{i,2})/2;
         else
             x_paikka = popnames{i,2}-1+(nind+1-popnames{i,2})/2;
         end
-               
+
         korkeuskerroin = pieninarvo / -0.2;
         suhdekerroin = npops/6;
         for letter_num = 1:length(popnames{i,1}{1})
@@ -85,4 +85,4 @@ function extra = korjaus(letter)
         extra = -0.003;
     else
         extra = 0;
-end;
+end

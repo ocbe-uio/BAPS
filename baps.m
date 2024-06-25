@@ -27,7 +27,7 @@ function baps(file, file_type, analysis, partitionCompare)
   end
 
   % Processing boolean input
-  partitionCompare = process_boolean_input(4);
+  partitionCompare = process_boolean_input(4); % i.e., false (0) if missing
 
   % Dispatching analysis
   switch analysis

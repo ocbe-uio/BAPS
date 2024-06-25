@@ -9,8 +9,10 @@ function [muutokset, diffInCounts] = ...
   % Otettu kהyttצצn globaali muuttuja LOGDIFF, johon on tallennettu muutokset
   % logml:ssה siirrettהessה yksilצitה toisiin populaatioihin.
 
-  global COUNTS;      global SUMCOUNTS;
-  global PARTITION;   global POP_LOGML;
+  global COUNTS;
+  global SUMCOUNTS;
+  global PARTITION;
+  global POP_LOGML;
   global LOGDIFF;
 
   npops = size(COUNTS,3);
@@ -42,7 +44,6 @@ function [muutokset, diffInCounts] = ...
   COUNTS(:,:,i2) = COUNTS(:,:,i2)-repmat(diffInCounts, [1 1 ni2]);
   SUMCOUNTS(i2,:) = SUMCOUNTS(i2,:)-repmat(diffInSumCounts,[ni2 1]);
 
-  muutokset(i2) = new_i1_logml - i1_logml ...
-  + new_i2_logml - i2_logml;
+  muutokset(i2) = new_i1_logml - i1_logml + new_i2_logml - i2_logml;
   LOGDIFF(ind,:) = muutokset;
 end

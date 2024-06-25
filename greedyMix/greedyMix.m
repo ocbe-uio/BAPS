@@ -29,10 +29,6 @@ function greedyMix(tietue, file_type, partitionCompare)
   Z = tietue.Z;
   clear tietue;
 
-  global PARTITION; global COUNTS;
-  global SUMCOUNTS; global POP_LOGML;
-  clearGlobalVars;
-
   c.data=data;
   c.noalle = noalle; c.adjprior = adjprior; c.priorTerm = priorTerm;
   c.dist=dist; c.Z=Z; c.rowsFromInd = rowsFromInd;
