@@ -30,15 +30,11 @@ function [logml, npops, partitionSummary] = indMix(c, npops, dispText)
     dispText = 1;
     npopstext = [];
     ready = false;
-    teksti = 'Input upper bound to the number of populations (possibly multiple values): ';
     while ready == false
-      npopstextExtra = inputdlg(teksti ,...
-      'Input maximum number of populations',1,{'3'});
-      drawnow
+      npopstextExtra = input('Input maximum number of populations (3)', 's');
       if isempty(npopstextExtra)  % Painettu Cancel:ia
-        return
+        npopstextExtra = '3';
       end
-      npopstextExtra = npopstextExtra{1};
       if length(npopstextExtra)>=255
         npopstextExtra = npopstextExtra(1:255);
         npopstext = [npopstext ' ' npopstextExtra];
