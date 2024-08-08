@@ -1,4 +1,4 @@
-function baps(file, file_type, analysis, partitionCompare)
+function baps(file, file_type, analysis, ~)
   % Adding functions from the current directory and its subdirectories
   addpath(genpath(cd));
 
