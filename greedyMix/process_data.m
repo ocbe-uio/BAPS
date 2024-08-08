@@ -2,6 +2,8 @@ function processed_data = process_data(filename, file_type, partitionCompare)
   switch file_type
     case 'BAPS'
       processed_data = process_BAPS_data(filename, partitionCompare);
+    case 'FASTA'
+      processed_data = process_FASTA_data(filename, partitionCompare);
     case 'GenePop'
       waitALittle;
       [filename, pathname] = uigetfile('*.txt', 'Load data in GenePop-format');
