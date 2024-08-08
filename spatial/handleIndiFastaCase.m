@@ -4,10 +4,9 @@ function handleIndiFastaCase(cc,dist,Z)
 
 OUTPUT_FILE = 'baps6_output.baps';
 
-teksti = 'Input upper bound to the number of populations (only one value): ';
-npopstextExtra = inputdlg(teksti ,'Input maximum number of populations',1,{'20'});
+npopstextExtra = input('Input maximum number of populations', 's');
 if isempty(npopstextExtra)  % Painettu Cancel:ia
-    return
+    nMaxPops = 20;
 else
     nMaxPops = str2num(npopstextExtra{1});
     nMaxPops = nMaxPops(1);
@@ -75,16 +74,15 @@ else
        names{i} = namesInCell;
    end
 end
-vorPlot(vorPoints, vorCells, partition, pointers, coordinates, names);    
+vorPlot(vorPoints, vorCells, partition, pointers, coordinates, names);
 
-talle = questdlg(['Do you want to save the mixture populations ' ...
+talle = input(['Do you want to save the mixture populations ' ...
     'so that you can use them later in admixture analysis or plot ' ...
-    'additional images?'], ...
-    'Save results?','Yes','No','Yes');
-if isequal(talle,'Yes')
+    'additional images? (y/N) '], 's');
+if isequal(talle,'y')
     %%waitALittle;    % Hetki odotusta, jotta muistaa kysy?..
     [filename, pathname] = uiputfile('*.mat','Save results as');
-    
+
     if (filename == 0) & (pathname == 0)
         % Cancel was pressed
         return
@@ -94,7 +92,7 @@ if isequal(talle,'Yes')
             delete(OUTPUT_FILE)
         end
     end
-       
+
     %  added by Lu Cheng, 05.12.2012
     tmpFile = [pathname filename '.mapfile.txt'];
     fid = fopen(tmpFile,'w+');
@@ -111,7 +109,7 @@ if isequal(talle,'Yes')
         end
     end
     fclose(fid);
-    
+
 %     save([pathname filename], 'c');
     format_type = 'FASTA';
     save([pathname filename], 'cc','dist','Z','format_type','-v7.3');
@@ -168,20 +166,20 @@ if (fid ~= -1)
 end
 for m=1:npops
     indsInM = find(partition==m);
-    
+
     if isempty(indsInM)
         continue;
     end
-    
+
     length_of_beginning = 11 + floor(log10(m));
     cluster_size = length(indsInM);
-    
+
     text = ['Cluster ' num2str(m) ': {' char(popnames{indsInM(1)})];
     for k = 2:cluster_size
         text = [text ', ' char(popnames{indsInM(k)})];
     end;
     text = [text '}'];
-    
+
     while length(text)>58
         %Take one line and display it.
         new_line = takeLine(text,58);
@@ -196,7 +194,7 @@ for m=1:npops
             text = [];
         end;
     end;
-    
+
     if ~isempty(text)
         disp(text);
         if (fid ~= -1)
@@ -214,7 +212,7 @@ else
     disp(' ');
     disp(' ');
     disp('Changes in log(marginal likelihood) if indvidual i is moved to cluster j:');
-        
+
     if (fid ~= -1)
         fprintf(fid, '%s \n', ' '); fprintf(fid, '\n');
         fprintf(fid, '%s \n', 'Changes in log(marginal likelihood) if indvidual i is moved to cluster j:'); fprintf(fid, '\n');
@@ -225,19 +223,19 @@ else
         tmpstr = sprintf('\t%10s',num2str(ii));
         text = [text tmpstr];
     end
-    
+
     disp(text);
     if (fid ~= -1)
         fprintf(fid, '%s \n', text);
     end
-        
+
     for ii = 1:ninds
         text = sprintf('%10s',popnames{ii});
         for jj = 1:npops
             tmpstr = sprintf('\t%10s',num2str(logmldiff(ii,jj),'%10.6f'));
             text = [text tmpstr];
         end
-        
+
         if ii<100
             disp(text);
         elseif ii==101
@@ -246,7 +244,7 @@ else
         end
         if (fid ~= -1)
             fprintf(fid, '%s \n', text);
-        end   
+        end
         text = [];
     end
 end
@@ -304,4 +302,3 @@ while ~isspace(description(n)) && n<length(description)
     n = n+1;
 end;
 newline = description(1:n);
-
