@@ -1,6 +1,4 @@
-
 function processed_data = process_FASTA_data(file, partitionCompare)
-  setWindowOnTop(base,'false')
   [filename1, pathname1] = uigetfile({'*.fasta';'*.*'}, 'Load data in FASTA-format');
   if filename1==0
     return;
@@ -28,7 +26,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   %     [ninds,data,heds]=testFastaData([pathname1 filename1]);
 
-  setWindowOnTop(base,'false')
   [filename2,pathname2]=uigetfile('*.txt', 'Load individual coordinates');
   if filename2==0
     return
@@ -59,7 +56,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   %     input_pops = 'No';
   if isequal(input_pops,'Yes')
     %waitALittle;
-    setWindowOnTop(base,'false')
     [namefile, namepath] = uigetfile('*.txt', 'Load population names');
     if namefile==0
       kysyToinen = 0;
@@ -68,7 +64,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
     end
     if kysyToinen==1
       %waitALittle;
-      setWindowOnTop(base,'false')
       [indicesfile, indicespath] = uigetfile('*.txt', 'Load population indices');
       if indicesfile==0
         popnames = [];
@@ -101,12 +96,12 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   save_preproc = questdlg('Do you wish to save pre-processed data?',...
   'Save pre-processed data?',...
   'Yes','No','Yes');
-  if isequal(save_preproc,'Yes');
+  if isequal(save_preproc,'Yes')
     %waitALittle;
     [filename, pathname] = uiputfile('*.mat','Save pre-processed data as');
     kokonimi = [pathname filename];
     save(kokonimi,'cc','dist','Z','format_type','-v7.3'); % added by Lu Cheng, 08.06.2012
-  end;
+  end
 
   handleIndiFastaCase(cc,dist,Z);
 
