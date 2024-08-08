@@ -7,7 +7,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   if ~isempty(partitionCompare)
     fprintf(1,'Data: %s\n',[pathname filename]);
   end
-  %data = load([pathname1 filename1]);
   [heds, seqs] = fastaread([pathname1 filename1]);
   seqs = seqs(:);
   alnMat = cell2mat(seqs);
@@ -24,15 +23,12 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   clear alnMat heds nSeq
 
-  %     [ninds,data,heds]=testFastaData([pathname1 filename1]);
-
   [filename2,pathname2]=uigetfile('*.txt', 'Load individual coordinates');
   if filename2==0
     return
   end
 
   coordinates = load([pathname2 filename2]);
-  %viallinen = testaaKoordinaatit(ninds, coordinates);
   [viallinen coordinates] = testaaKoordinaatit(ninds, coordinates); % added by Lu Cheng, 05.12.2012
   if viallinen
     disp('Incorrect coordinates');
@@ -53,9 +49,7 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   'sampling populations?'], ...
   'Specify sampling populations?',...
   'Yes', 'No', 'No');
-  %     input_pops = 'No';
   if isequal(input_pops,'Yes')
-    %waitALittle;
     [namefile, namepath] = uigetfile('*.txt', 'Load population names');
     if namefile==0
       kysyToinen = 0;
@@ -63,7 +57,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
       kysyToinen = 1;
     end
     if kysyToinen==1
-      %waitALittle;
       [indicesfile, indicespath] = uigetfile('*.txt', 'Load population indices');
       if indicesfile==0
         popnames = [];
@@ -79,8 +72,6 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   disp('Pre-processing the data. This may take several minutes.');
 
-  %     [data, rowsFromInd, alleleCodes, noalle, adjprior, priorTerm] = handleData(data);
-  %     [Z,dist] = newGetDistances(data,rowsFromInd);
   [cliques, separators, vorPoints, vorCells, pointers] = ...
   handleCoords(coordinates);
 
@@ -97,14 +88,11 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   'Save pre-processed data?',...
   'Yes','No','Yes');
   if isequal(save_preproc,'Yes')
-    %waitALittle;
     [filename, pathname] = uiputfile('*.mat','Save pre-processed data as');
     kokonimi = [pathname filename];
     save(kokonimi,'cc','dist','Z','format_type','-v7.3'); % added by Lu Cheng, 08.06.2012
   end
 
   handleIndiFastaCase(cc,dist,Z);
-
-  return;
 
 end
