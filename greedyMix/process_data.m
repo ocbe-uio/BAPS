@@ -62,6 +62,6 @@ function processed_data = process_data(filename, file_type, partitionCompare)
       end
       processed_data = c;
     otherwise
-      disp('Unknown file type');
+      fprintf('Unknown file type: %s\n', file_type);
   end
 end
