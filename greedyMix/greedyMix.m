@@ -1,5 +1,4 @@
-function greedyMix(tietue, file_type, partitionCompare)
-
+function greedyMix(tietue, file_type, ~)
   % check whether fixed k mode is selected
   h0 = findobj('Tag','fixk_menu');
   fixedK = get(h0, 'userdata');
