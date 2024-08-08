@@ -1,4 +1,4 @@
-function greedyMix(tietue, file_type, ~)
+function greedyMix(tietue, file_type, ~, coordinates)
   % check whether fixed k mode is selected
   h0 = findobj('Tag','fixk_menu');
   fixedK = get(h0, 'userdata');
@@ -14,7 +14,7 @@ function greedyMix(tietue, file_type, ~)
   partitionCompare = get(h1, 'userdata');
 
   % Processing data
-  tietue = process_data(tietue, file_type, partitionCompare);
+  tietue = process_data(tietue, file_type, partitionCompare, coordinates);
 
   % Extract elements from pre-processed data
   data = double(tietue.data);

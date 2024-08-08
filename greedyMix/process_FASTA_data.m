@@ -1,4 +1,4 @@
-function processed_data = process_FASTA_data(file, partitionCompare)
+function processed_data = process_FASTA_data(file, partitionCompare, coordinates)
   if ~isempty(partitionCompare)
     fprintf(1, 'Data: %s\n', file);
   end
@@ -18,12 +18,12 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   clear alnMat heds nSeq
 
-  [filename2,pathname2]=uigetfile('*.txt', 'Load individual coordinates');
-  if filename2==0
+  filename2 = coordinates;
+  if isempty(filename2)
     return
   end
 
-  coordinates = load([pathname2 filename2]);
+  coordinates = load(coordinates);
   [viallinen coordinates] = testaaKoordinaatit(ninds, coordinates); % added by Lu Cheng, 05.12.2012
   if viallinen
     disp('Incorrect coordinates');

@@ -1,4 +1,4 @@
-function baps(file, file_type, analysis, ~)
+function baps(file, file_type, analysis, coordinates, ~)
   % Adding functions from the current directory and its subdirectories
   addpath(genpath(cd));
 
@@ -26,6 +26,11 @@ function baps(file, file_type, analysis, ~)
     end
   end
 
+  % Check if coordinates are provided
+  if nargin < 4
+    coordinates = []; % Default value if coordinates are not provided
+  end
+
   % Processing boolean input
   partitionCompare = process_boolean_input(4); % i.e., false (0) if missing
 
@@ -33,7 +38,7 @@ function baps(file, file_type, analysis, ~)
   switch analysis
     case 'greedyMix'
       disp('Clustering of individuals');
-      greedyMix(file, file_type, partitionCompare);
+      greedyMix(file, file_type, partitionCompare, coordinates);
     case 'greedyPopMix'
       disp('Clustering of groups of individuals');
       greedyPopMix;
