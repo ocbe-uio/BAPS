@@ -1,13 +1,8 @@
 function processed_data = process_FASTA_data(file, partitionCompare)
-  [filename1, pathname1] = uigetfile({'*.fasta';'*.*'}, 'Load data in FASTA-format');
-  if filename1==0
-    return;
-  end
-
   if ~isempty(partitionCompare)
-    fprintf(1,'Data: %s\n',[pathname filename]);
+    fprintf(1, 'Data: %s\n', file);
   end
-  [heds, seqs] = fastaread([pathname1 filename1]);
+  [heds, seqs] = fastaread(file);
   seqs = seqs(:);
   alnMat = cell2mat(seqs);
   nSeq = length(seqs);
@@ -35,11 +30,11 @@ function processed_data = process_FASTA_data(file, partitionCompare)
     return
   end
 
-  inp = [filename1 ' & ' filename2];
-  h0 = findobj('Tag','filename1_text');
+  inp = [file ' & ' filename2];
+  h0 = findobj('Tag','file_text');
   set(h0,'String',inp);
   clear h0; clear inp;
-  clear filename1; clear filename2; clear pathname1; clear pathname2;
+  clear file; clear filename2; clear pathname1; clear pathname2;
 
   input_pops = questdlg(['When using data which are in FASTA-format, '...
   'you can specify the sampling populations of the individuals by '...
