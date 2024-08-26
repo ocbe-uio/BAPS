@@ -1,13 +1,10 @@
-function processed_data = process_FASTA_data(file, partitionCompare)
-  [filename1, pathname1] = uigetfile({'*.fasta';'*.*'}, 'Load data in FASTA-format');
-  if filename1==0
-    return;
-  end
-
+function processed_data = process_FASTA_data(file, partitionCompare, coordinates)
   if ~isempty(partitionCompare)
-    fprintf(1,'Data: %s\n',[pathname filename]);
+    fprintf(1, 'Data: %s\n', file);
   end
-  [heds, seqs] = fastaread([pathname1 filename1]);
+  [heds, seqs] = fastaread(file);
+  % FIXME: everything below might be valid for spatialMixture only. Maybe convert to BAPS first and call process_BAPS_data?
+  % TODO parse through handleData (like BAPS file)? Maybe the below is only relevant for spatialMixture...
   seqs = seqs(:);
   alnMat = cell2mat(seqs);
   nSeq = length(seqs);
@@ -23,33 +20,31 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   clear alnMat heds nSeq
 
-  [filename2,pathname2]=uigetfile('*.txt', 'Load individual coordinates');
-  if filename2==0
+  filename2 = coordinates;
+  if isempty(filename2)
     return
   end
 
-  coordinates = load([pathname2 filename2]);
+  coordinates = load(coordinates);
   [viallinen coordinates] = testaaKoordinaatit(ninds, coordinates); % added by Lu Cheng, 05.12.2012
   if viallinen
     disp('Incorrect coordinates');
     return
   end
 
-  inp = [filename1 ' & ' filename2];
-  h0 = findobj('Tag','filename1_text');
+  inp = [file ' & ' filename2];
+  h0 = findobj('Tag','file_text');
   set(h0,'String',inp);
   clear h0; clear inp;
-  clear filename1; clear filename2; clear pathname1; clear pathname2;
+  clear file; clear filename2; clear pathname1; clear pathname2;
 
-  input_pops = questdlg(['When using data which are in FASTA-format, '...
+  input_pops = input(['When using data which are in FASTA-format, '...
   'you can specify the sampling populations of the individuals by '...
   'giving two additional files: one containing the names of the '...
   'populations, the other containing the indices of the first '...
   'individuals of the populations. Do you wish to specify the '...
-  'sampling populations?'], ...
-  'Specify sampling populations?',...
-  'Yes', 'No', 'No');
-  if isequal(input_pops,'Yes')
+  'sampling populations? (y/N)'], 's');
+  if isequal(input_pops,'y')
     [namefile, namepath] = uigetfile('*.txt', 'Load population names');
     if namefile==0
       kysyToinen = 0;
@@ -72,8 +67,7 @@ function processed_data = process_FASTA_data(file, partitionCompare)
 
   disp('Pre-processing the data. This may take several minutes.');
 
-  [cliques, separators, vorPoints, vorCells, pointers] = ...
-  handleCoords(coordinates);
+  [cliques, separators, vorPoints, vorCells, pointers] = handleCoords(coordinates);
 
   cc.locCliques = cliques;
   cc.locSeparators = separators;
@@ -84,10 +78,8 @@ function processed_data = process_FASTA_data(file, partitionCompare)
   cc.coordinates = coordinates;
   format_type = 'FASTA';
 
-  save_preproc = questdlg('Do you wish to save pre-processed data?',...
-  'Save pre-processed data?',...
-  'Yes','No','Yes');
-  if isequal(save_preproc,'Yes')
+  save_preproc = input('Do you wish to save pre-processed data? (y/N)', 's');
+  if isequal(save_preproc,'y')
     [filename, pathname] = uiputfile('*.mat','Save pre-processed data as');
     kokonimi = [pathname filename];
     save(kokonimi,'cc','dist','Z','format_type','-v7.3'); % added by Lu Cheng, 08.06.2012
