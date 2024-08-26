@@ -13,7 +13,7 @@ function processed_data = process_BAPS_data(file, partitionCompare)
   [data, rowsFromInd, alleleCodes, noalle, adjprior, priorTerm] = handleData(data);
   [Z, dist] = newGetDistances(data, rowsFromInd);
 
-  % Forming and saving pre-processed data
+  % Forming and returning pre-processed data
   processed_data.data = data;
   processed_data.rowsFromInd = rowsFromInd;
   processed_data.alleleCodes = alleleCodes;
