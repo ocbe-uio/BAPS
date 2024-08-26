@@ -14,7 +14,7 @@ function greedyMix(tietue, file_type, ~, coordinates)
   partitionCompare = get(h1, 'userdata');
 
   % Processing data
-  if file_type == -1
+  if file_type == ""
     file_type = questdlg('Specify the format of your data: ',...
       'Specify Data Format', ...
       'BAPS', 'GenePop', 'Preprocessed data', 'BAPS');

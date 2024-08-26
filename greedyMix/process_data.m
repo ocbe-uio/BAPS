@@ -1,7 +1,7 @@
 function processed_data = process_data(filename, file_type, partitionCompare, coordinates)
   switch file_type
     case 'BAPS'
-      if filename == -1
+      if filename == ""
         [filename, pathname] = uigetfile('*.txt', 'Load data in BAPS-format');
         filename = fullfile(pathname, filename);
       end

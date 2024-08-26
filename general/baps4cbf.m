@@ -2,7 +2,7 @@ function baps4cbf(action)
     switch action
         case 'mix1_button'
             % Clustering of individuals
-            greedyMix(-1, -1, -1, -1);
+            greedyMix("", "", "", "");
         case 'mix2_button'
             greedyPopMix;
         case 'trained_button'
