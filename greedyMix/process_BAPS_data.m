@@ -3,7 +3,7 @@ function processed_data = process_BAPS_data(file, partitionCompare)
     fprintf(1, 'Data: %s\n', file);
   end
   data = importdata(file);
-  ninds = testaaOnkoKunnollinenBapsData(data);  % for testing purposes?
+  ninds = testaaOnkoKunnollinenBapsData(data);  % for validation?
   if (ninds == 0)
     warning('Incorrect Data-file.');
     return;

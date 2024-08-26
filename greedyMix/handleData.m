@@ -21,7 +21,6 @@ function [newData, rowsFromInd, alleleCodes, noalle, adjprior, priorTerm] = ...
     data(:,1:nloci) = dataApu;
   end
   dataApu = []; nollat = []; isoinAlleeli = [];
-
   noalle=zeros(1,nloci);
   alleelitLokuksessa = cell(nloci,1);
   for i=1:nloci

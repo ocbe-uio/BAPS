@@ -3,6 +3,8 @@ function processed_data = process_FASTA_data(file, partitionCompare, coordinates
     fprintf(1, 'Data: %s\n', file);
   end
   [heds, seqs] = fastaread(file);
+  % FIXME: everything below might be valid for spatialMixture only. Maybe convert to BAPS first and call process_BAPS_data?
+  % TODO parse through handleData (like BAPS file)? Maybe the below is only relevant for spatialMixture...
   seqs = seqs(:);
   alnMat = cell2mat(seqs);
   nSeq = length(seqs);
@@ -65,8 +67,7 @@ function processed_data = process_FASTA_data(file, partitionCompare, coordinates
 
   disp('Pre-processing the data. This may take several minutes.');
 
-  [cliques, separators, vorPoints, vorCells, pointers] = ...
-  handleCoords(coordinates);
+  [cliques, separators, vorPoints, vorCells, pointers] = handleCoords(coordinates);
 
   cc.locCliques = cliques;
   cc.locSeparators = separators;
