@@ -1,4 +1,7 @@
 Example GenePop Data
+Loc1
+Loc2
+Loc3
 Pop
 Ind1, 0101 0202 0303
 Ind2, 0102 0201 0303
