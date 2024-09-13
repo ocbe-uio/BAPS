@@ -17,7 +17,3 @@ BAPS_package/run_baps6.sh: $(BAPSFOLDERS)
 	@echo "Compiling BAPS"
 	@$(MATLABEXEC) $(MATLABOPTS) "run('general/compileBaps6.m'); exit;"
 	@echo "done"
-
-run:
-	@echo "Running BAPS GUI"
-	bash BAPS_package/run_baps6.sh $(MATLABDIR)
