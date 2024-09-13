@@ -1,4 +1,4 @@
-function baps(file, file_type, analysis, coordinates, ~)
+function baps(file, file_type, analysis, coordinates, ~) %TODO: move to general?
   % Adding functions from the current directory and its subdirectories
   addpath(genpath(cd));
 
