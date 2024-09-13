@@ -16,8 +16,8 @@ function greedyMix(tietue, file_type, ~, coordinates)
   % Processing data
   if file_type == ""
     file_type = questdlg('Specify the format of your data: ',...
-      'Specify Data Format', ...
-      'BAPS', 'GenePop', 'Preprocessed data', 'BAPS');
+    'Specify Data Format', ...
+    'BAPS', 'GenePop', 'Preprocessed data', 'BAPS');
   end
   tietue = process_data(tietue, file_type, partitionCompare, coordinates);
 
@@ -92,7 +92,7 @@ function greedyMix(tietue, file_type, ~, coordinates)
 
   talle = questdlg(['Do you want to save the mixture populations ' ...
   'so that you can use them later in admixture analysis?'], ...
-  'Save results?','Yes','No','Yes');
+  'Save results?','Yes','No','No');
   if isequal(talle,'Yes')
     waitALittle;
     [filename, pathname] = uiputfile('*.mat','Save results as');
@@ -1201,8 +1201,6 @@ function [emptyPop, pops] = findEmptyPop(npops)
 end
 
 %--------------------------------------------------------------------
-
-
 
 function loggis = laskeLoggis(counts, sumcounts, adjprior)
   npops = size(counts,3);
