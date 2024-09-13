@@ -1,9 +1,9 @@
-function baps(file, file_type, analysis, coordinates, ~)
+function baps(file, file_type, analysis, coordinates, ~) %TODO: move to general?
   % Adding functions from the current directory and its subdirectories
   addpath(genpath(cd));
 
   % Welcome message
-  ver = [6 0 0 9003];
+  ver = [6 0 0 9004];
   versionStr = sprintf('%d.%d.%d.%d', ver(1), ver(2), ver(3), ver(4));
   disp(['Welcome to BAPS ' versionStr]);
 

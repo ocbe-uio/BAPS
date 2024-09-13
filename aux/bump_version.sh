@@ -23,11 +23,11 @@ do
 
   # Print the line
   echo "$line"
-done < "baps.m" > "baps_new.m"
+done < "general/baps.m" > "baps_new.m"
 
 
 # Replace the old file with the new file
-mv "baps_new.m" "baps.m"
+mv "baps_new.m" "general/baps.m"
 
 # Final message (useful for commit)
 version_string=$(echo "$version" | tr ' ' '.')
