@@ -8,11 +8,11 @@ read -r -p "Select which version of BAPS you want to run ([t]erminal [g]ui): " c
 # Run the appropriate script
 case "$choice" in
   [tT])
-    bash runBAPS.sh
+    bash general/runBAPS.sh
     ;;
   [gG])
     echo "Using MATLAB on $MATLABDIR."
-    echo " If this fails, please change the MATLABDIR variable in this script."
+    echo "If this fails, please change the MATLABDIR variable in this script."
     bash BAPS_package/run_baps6.sh $MATLABDIR
     ;;
   *)
