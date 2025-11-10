@@ -37,8 +37,8 @@ If you don't know where MATLAB is installed, you can find out by opening the MAT
 Once MATLAB is running, compile BAPS by typing:
 
 ```MATLAB
-run add_BAPS_to_path.m
-run compileBaps6.m
+run ./standard/add_BAPS_to_path.m
+run ./standard/compileBaps6.m
 ```
 
 This should create a `BAPS_package` folder in the root directory of this repository.
